@@ -1,8 +1,14 @@
 import React from 'react';
+import Thread from './thread';
+
+
+
 
 function App() {
   return (
-    <h1>hello</h1>
+    <div>
+      {contents.map(current => (<Thread content = {current} /> ))}
+    </div>
   );
 }
 

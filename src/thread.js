@@ -2,7 +2,7 @@ import React from 'react';
 
 function Thread({content}) {
   console.log("content");
-  console.log(content);
+  //console.log(content);
   return (
     <h1>{content['num']}
     {content['title']}

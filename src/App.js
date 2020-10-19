@@ -2,29 +2,50 @@ import axios from 'axios';
 import React from 'react';
 import Thread from './thread';
 
+ 
+
+class App extends React.Component {
+  state = {
+    isLoading : true,
+    dataCategory : []
+  };
+
+
+  getMany = async () => {
+    const {data :dataCategory} = await axios.get("http://localhost:8080/api/many");
+    this.setState({ dataCategory });
+    console.log(dataCategory);
+  }
 
 
 
-function Load(pagenum,sort,category) {
-  const data = axios.post(`http://localhost:4000/api/thread/${pagenum}`, {
-      "sort" : sort,
-      "category" : category
-    })
-    .then((response) => { return response.data.contents; })
-    .catch((error) => { console.log(error); });
+  componentDidMount(){
+    this.getMany();
+  }
 
-  console.log(typeof data);
-  console.log(data[0]);
-  //return data
-}
+  render() {
+    const { isLoading } = this.state; 
+    return(
+      <div>
+      <h1></h1>
+        <div>
+          <button>all({this.state.dataCategory['all']})</button>
+          <button>app({this.state.dataCategory['app']})</button>
+          <button>web({this.state.dataCategory['web']})</button>
+          <button>game({this.state.dataCategory['game']})</button>
+          <button>guitar({this.state.dataCategory['guitar']})</button>
+        </div>
 
+      <h1>스레드 내용들</h1>
 
-function App() {
-  return (
-    <div>
-      {Load(0,"like",0)}
-    </div>
-  );
+        <div>
+          <button>up</button>
+          <button>add</button>
+        </div>
+      </div>
+    )
+  }
+
 }
 
 export default App;

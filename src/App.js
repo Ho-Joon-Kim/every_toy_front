@@ -2,41 +2,60 @@ import axios from 'axios';
 import React from 'react';
 import Thread from './thread';
 
- 
+const link = "http://localhost:8080/api";
 
 class App extends React.Component {
   state = {
-    isLoading : true,
-    dataCategory : []
+    dataCategory : [],
+    pagedata : [],
+    pagenum : 0,
+    sort : "date",
+    category : 0
   };
 
 
   getMany = async () => {
-    const {data :dataCategory} = await axios.get("http://localhost:8080/api/many");
+    const {data :dataCategory} = await axios.get(`${link}/many`);
     this.setState({ dataCategory });
     console.log(dataCategory);
+  }
+
+  getPage = async (pagenum,sort,category) => {
+    const config = { "sort" : sort,"category" : category };
+    const {data : { contents }} = await axios.get(`${link}/thread/${pagenum}`, { headers: config });
+    this.setState({ pagedata: this.state.pagedata.concat(contents) });
+    console.log(this.state.pagedata);
+  }
+
+
+  resetPage = async (sort,category) => {
+    this.setState({ pagedata: []});
+    this.setState({ pagenum: 0});
+    this.setState({ sort });
+    this.setState({ category });
+
+    this.getPage(0,sort,category);
   }
 
 
 
   componentDidMount(){
     this.getMany();
+    this.getPage(0,"like",0);
   }
 
   render() {
-    const { isLoading } = this.state; 
     return(
       <div>
-      <h1></h1>
         <div>
-          <button>all({this.state.dataCategory['all']})</button>
-          <button>app({this.state.dataCategory['app']})</button>
-          <button>web({this.state.dataCategory['web']})</button>
-          <button>game({this.state.dataCategory['game']})</button>
-          <button>guitar({this.state.dataCategory['guitar']})</button>
+          <button onClick={ () => { this.resetPage("date",0); } }>all({this.state.dataCategory['all']})</button>
+          <button onClick={ () => { this.resetPage("date",1); } }>app({this.state.dataCategory['app']})</button>
+          <button onClick={ () => { this.resetPage("date",2); } }>web({this.state.dataCategory['web']})</button>
+          <button onClick={ () => { this.resetPage("date",3); } }>game({this.state.dataCategory['game']})</button>
+          <button onClick={ () => { this.resetPage("date",4); } }>guitar({this.state.dataCategory['guitar']})</button>
         </div>
 
-      <h1>스레드 내용들</h1>
+        <div>{this.state.pagedata.map(current => (<Thread content = {current} /> ))}</div>
 
         <div>
           <button>up</button>

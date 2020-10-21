@@ -51,13 +51,12 @@ class App extends React.Component {
         <div className = "title_PJ">every_toy</div>
         
         <div className = "category_block">
-          <div className = "category">
-            <button onClick={ () => { this.resetPage("date",0); } }>all({this.state.dataCategory['all']})</button>
-            <button onClick={ () => { this.resetPage("date",1); } }>app({this.state.dataCategory['app']})</button>
-            <button onClick={ () => { this.resetPage("date",2); } }>web({this.state.dataCategory['web']})</button>
-            <button onClick={ () => { this.resetPage("date",3); } }>game({this.state.dataCategory['game']})</button>
-            <button onClick={ () => { this.resetPage("date",4); } }>guitar({this.state.dataCategory['guitar']})</button>
-          </div>
+          <h1 className = "category">category</h1>
+          <button onClick={ () => { this.resetPage("date",0); } } className = "category">all({this.state.dataCategory['all']})</button>
+          <button onClick={ () => { this.resetPage("date",1); } } className = "category" >app({this.state.dataCategory['app']})</button>
+          <button onClick={ () => { this.resetPage("date",2); } } className = "category" >web({this.state.dataCategory['web']})</button>
+          <button onClick={ () => { this.resetPage("date",3); } } className = "category" >game({this.state.dataCategory['game']})</button>
+          <button onClick={ () => { this.resetPage("date",4); } } className = "category" >guitar({this.state.dataCategory['guitar']})</button>
         </div>
 
         <div className = "block">{this.state.pagedata.map(current => (<Thread content = {current} /> ))}</div>

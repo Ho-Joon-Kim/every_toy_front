@@ -39,7 +39,9 @@
 }
 
 .category {
-  position: static;
+  position: relative;
+  left: 10%;
+  top: 5%;
 
   font-family: Roboto;
   font-style: normal;
